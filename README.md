@@ -105,3 +105,4 @@ npm run dev
 
 Ce projet est soumis dans le cadre du **GAIAthon 2025** – Hackathon sur l’innovation durable.
 "# hydronex-project" 
+"# hydronex-project" 
