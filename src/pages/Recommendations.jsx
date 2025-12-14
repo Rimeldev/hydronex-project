@@ -7,7 +7,7 @@ import {
   ChevronDownIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
-import { fetchAlerts, fetchDevices } from "../services/deviceService";
+import { fetchAlerts, fetchDevices } from "../services/api";
 import NewsletterForm from "../components/NewsletterForm";
 
 export default function Recommandations() {

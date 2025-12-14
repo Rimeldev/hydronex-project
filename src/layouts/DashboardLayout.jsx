@@ -6,20 +6,18 @@ export default function DashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className="flex bg-[#003366] min-h-screen relative">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Sidebar */}
-      {isSidebarOpen && (
-        <Sidebar />
-      )}
+      {isSidebarOpen && <Sidebar />}
 
-      {/* Contenu principal */}
+      {/* Main content */}
       <div className="flex-1 flex flex-col">
         <Topbar toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-        {/* Conteneur blanc */}
-        <div className="bg-white rounded-t-2xl p-6 flex-1">
+        {/* Content area */}
+        <main className="flex-1 p-6 overflow-auto">
           {children}
-        </div>
+        </main>
       </div>
     </div>
   );

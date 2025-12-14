@@ -5,8 +5,10 @@ import Recommendations from './pages/Recommendations';
 import HydroBot from './pages/HydroBot';
 import DashboardLayout from './layouts/DashboardLayout';
 import DevicesPage from './pages/DevicesPage';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Support from './pages/Support';
 import 'leaflet/dist/leaflet.css';
+
 
 const alerts = [
   {
@@ -77,7 +79,7 @@ const alerts = [
 
 function App() {
   return (
-       
+        <ThemeProvider>
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/" element={ <DashboardLayout>
@@ -121,7 +123,7 @@ function App() {
           }
         />
       </Routes>
-
+</ThemeProvider>
       
   );
 }

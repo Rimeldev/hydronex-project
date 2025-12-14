@@ -1,7 +1,7 @@
 // DeviceDetailsModal.jsx
 import { X, MapPin, Battery } from "lucide-react";
 import { useEffect, useState } from "react";
-import { fetchRealTimeData } from "../services/deviceService";
+import { fetchRealTimeData } from "../services/api";
 
 export default function DeviceDetailsModal({ device, onClose }) {
   const [parameters, setParameters] = useState(null);

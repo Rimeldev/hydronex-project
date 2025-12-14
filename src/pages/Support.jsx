@@ -3,87 +3,86 @@ import { HelpCircle } from "lucide-react";
 export default function Support() {
   return (
     <div className="p-8 bg-gray-50 min-h-screen text-gray-800">
-      <h1 className="text-3xl font-bold mb-6 text-black">Support - À propos de HydroNex</h1>
+      <h1 className="text-3xl font-bold mb-6 text-black">Support - About HydroNex</h1>
 
-      {/* Présentation de la plateforme */}
+      {/* Platform Presentation */}
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-4 text-blue-600 flex items-center gap-2">
           <HelpCircle className="w-6 h-6" />
-          Qu'est-ce que HydroNex ?
+          What is HydroNex?
         </h2>
         <p className="text-gray-700 leading-relaxed text-sm">
-          <strong>HydroNex</strong> est une solution IoT flottante innovante conçue pour la
-          <strong> surveillance en temps réel de la qualité de l’eau et de la salinité côtière</strong>.
-          Elle combine des dispositifs IoT autonomes, un tableau de bord interactif, un système d’alerte
-          intelligent, une newsletter automatisée et un assistant virtuel baptisé <strong>HydroBot</strong>.
+          <strong>HydroNex</strong> is an innovative floating IoT solution designed for
+          <strong> real-time monitoring of water quality and coastal salinity</strong>.
+          It combines autonomous IoT devices, an interactive dashboard, an intelligent alert system,
+          an automated newsletter, and a virtual assistant called <strong>HydroBot</strong>.
         </p>
       </section>
 
-      {/* Fonctionnement */}
+      {/* How it works */}
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-4 text-blue-600">
-          Comment fonctionne HydroNex ?
+          How does HydroNex work?
         </h2>
         <ul className="list-disc pl-6 text-gray-700 space-y-3 text-sm">
           <li>
-            🌊 <strong>Capteurs IoT flottants :</strong> installés sur l’eau, ces dispositifs mesurent
-            en continu des paramètres clés tels que la température, la turbidité, le pH, l’oxygène
-            dissous, et la salinité.
+            🌊 <strong>Floating IoT sensors:</strong> installed on water, these devices continuously
+            measure key parameters such as temperature, turbidity, pH, dissolved oxygen, and salinity.
           </li>
           <li>
-            ☁️ <strong>Transmission des données :</strong> les données sont transmises via réseau (Wi-Fi)
-            vers la plateforme centrale.
+            ☁️ <strong>Data transmission:</strong> data is transmitted via network (Wi-Fi)
+            to the central platform.
           </li>
           <li>
-            📊 <strong>Tableau de bord interactif :</strong> accessible depuis n’importe quel navigateur,
-            il permet de visualiser les données en temps réel, analyser les tendances, et comparer
-            différents sites.
+            📊 <strong>Interactive dashboard:</strong> accessible from any browser,
+            it allows you to visualize real-time data, analyze trends, and compare
+            different sites.
           </li>
           <li>
-            🚨 <strong>Système d’alerte intelligent :</strong> lorsqu’un seuil critique est dépassé (ex. salinité élevée),
-            une alerte est générée avec une recommandation automatique.
+            🚨 <strong>Intelligent alert system:</strong> when a critical threshold is exceeded
+            (e.g. high salinity), an alert is generated with an automatic recommendation.
           </li>
           <li>
-            📨 <strong>Newsletter automatisée :</strong> un récapitulatif régulier est envoyé par email avec les
-            dernières données, alertes et recommandations.
+            📨 <strong>Automated newsletter:</strong> a regular summary is sent by email with
+            the latest data, alerts, and recommendations.
           </li>
           <li>
-            🤖 <strong>HydroBot :</strong> un assistant virtuel intégré pour poser des questions, demander des conseils
-            et obtenir rapidement des résumés des données.
+            🤖 <strong>HydroBot:</strong> an integrated virtual assistant to ask questions, request
+            advice, and quickly obtain data summaries.
           </li>
         </ul>
       </section>
 
-      {/* Objectifs et avantages */}
+      {/* Goals and advantages */}
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-4 text-blue-600">
-          Pourquoi utiliser HydroNex ?
+          Why use HydroNex?
         </h2>
         <ul className="list-disc pl-6 text-gray-700 space-y-2 text-sm">
-          <li>Améliorer la gestion durable des ressources en eau.</li>
-          <li>Prendre des décisions rapides et basées sur des données fiables.</li>
-          <li>Prévenir la pollution de l’eau et les risques environnementaux.</li>
-          <li>Faciliter le suivi de plusieurs sites en simultané.</li>
-          <li>Simplifier l’accès à l’information pour les acteurs locaux et les décideurs.</li>
+          <li>Improve sustainable water resource management.</li>
+          <li>Make quick decisions based on reliable data.</li>
+          <li>Prevent water pollution and environmental risks.</li>
+          <li>Facilitate monitoring of multiple sites simultaneously.</li>
+          <li>Simplify access to information for local stakeholders and decision-makers.</li>
         </ul>
       </section>
 
-      {/* Contact support */}
+      {/* Support contact */}
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-4 text-blue-600">
-          Besoin d’aide ?
+          Need help?
         </h2>
         <p className="text-gray-700 text-sm leading-relaxed">
-          Pour toute question technique ou demande d’assistance, veuillez nous contacter :
+          For any technical question or assistance request, please contact us:
         </p>
         <ul className="mt-2 text-gray-700 text-sm">
-          <li>📧 Email : <a href="shydronex@gmail.com" className="text-blue-600 underline">shydronex@gmail.com</a></li>
-          <li>📞 Téléphone : +229 58 22 63 60</li>
+          <li>📧 Email: <a href="mailto:shydronex@gmail.com" className="text-blue-600 underline">shydronex@gmail.com</a></li>
+          <li>📞 Phone: +229 58 22 63 60</li>
         </ul>
       </section>
 
       <p className="text-xs text-gray-500 text-center">
-        HydroNex © 2025 — Tous droits réservés
+        HydroNex © 2025 — All rights reserved
       </p>
     </div>
   );

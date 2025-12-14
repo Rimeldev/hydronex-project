@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import ParameterCard from "../components/ParameterCard";
 import ParameterChart from "../components/ParameterChart";
 import HeaderDashboard from "../components/HeaderDashboard";
-import LiveSensorFeed from "../components/LiveSensorFeed";
 import MapSection from "../components/MapSection";
 import ToastNotification from "../components/ToastNotification";
 
@@ -11,7 +10,7 @@ import temperatureIcon from "../assets/icons/temperature.png";
 import phIcon from "../assets/icons/ph.png";
 import turbidityIcon from "../assets/icons/turbidity.png";
 
-import { fetchRealTimeData, fetchHistoricalData, fetchLastAlert } from "../services/deviceService";
+import { fetchRealTimeData, fetchHistoricalData, fetchLastAlert } from "../services/api";
 
 // 🔧 FONCTION UTILITAIRE pour convertir UTC en heure locale
 function convertUTCToLocal(utcTimeString, format = "full") {
@@ -184,22 +183,20 @@ export default function Dashboard() {
     setFilters({ dispositifId, date });
   }, []);
 
-  // Adapter sensorData pour LiveSensorFeed
-  const liveFeedData = chartData.length > 0 ? chartData : [parameterData];
+
 
   return (
     <div className="space-y-6">
       <ToastNotification alert={recentAlert} />
       <HeaderDashboard onFilterChange={handleFilterChange} batteryLevel={batteryLevel} />
-      
-      <LiveSensorFeed sensorData={liveFeedData} />
+  
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <ParameterCard
           icon={salinityIcon}
           value={parameterData.salinity ?? "-"}
           unit="psu"
-          label="Salinité"
+          label="Salinity"
           gradientFrom="#ffe259"
           gradientTo="#ffa751"
         />
@@ -207,22 +204,22 @@ export default function Dashboard() {
           icon={temperatureIcon}
           value={parameterData.temperature ?? "-"}
           unit="°C"
-          label="Température"
-          gradientFrom="#ff9a9e"
-          gradientTo="#fad0c4"
+          label="Temperature"
+          gradientFrom="#FA656AFF"
+          gradientTo="#ff9a9e"
         />
         <ParameterCard
           icon={phIcon}
           value={parameterData.pH ?? "-"}
           label="pH"
-          gradientFrom="#a1ffce"
-          gradientTo="#faffd1"
+          gradientFrom="#6EFAB2FF"
+          gradientTo="#a1ffce"
         />
         <ParameterCard
           icon={turbidityIcon}
           value={parameterData.turbidity ?? "-"}
           unit="NTU"
-          label="Turbidité"
+          label="Turbidity"
           gradientFrom="#89f7fe"
           gradientTo="#66a6ff"
         />

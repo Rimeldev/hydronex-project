@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Menu, Clock } from "lucide-react";
 
 export default function Topbar({ toggleSidebar }) {
   const [time, setTime] = useState(new Date());
@@ -8,49 +9,37 @@ export default function Topbar({ toggleSidebar }) {
     return () => clearInterval(interval);
   }, []);
 
-  const formattedDate = time.toLocaleDateString("fr-FR", {
+  const formattedDate = time.toLocaleDateString("en-US", {
     weekday: "short",
     day: "2-digit",
-    month: "long",
+    month: "short",
   });
 
-  const formattedTime = time.toLocaleTimeString("fr-FR", {
+  const formattedTime = time.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
   return (
-    <div className="bg-[#003366] text-white flex justify-between items-center px-6 py-3 w-full">
-         {/* Bouton hamburger (à gauche) */}
-      <button onClick={toggleSidebar} className="md:hidden block">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-white"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+    <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center px-6 py-4">
+      {/* Mobile menu button */}
+      <button 
+        onClick={toggleSidebar} 
+        className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+      >
+        <Menu className="w-5 h-5 text-gray-700 dark:text-gray-300" />
       </button>
-      {/* Filtres de sélection */}
-      <div className="flex items-center gap-4">
-        <div className=" text-sm px-4 py-1.5 rounded-md">
-         
+
+      {/* Empty space for balance */}
+      <div className="flex-1" />
+
+      {/* Date & Time */}
+      <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex items-center gap-2">
+          <Clock className="w-4 h-4" />
+          <span className="font-medium">{formattedDate}</span>
         </div>
-        <div className=" text-sm px-4 py-1.5 rounded-md">
-          
-        </div>
-      </div>
-
-      {/* Batterie + Date + Heure */}
-      <div className="flex items-center gap-6 text-sm">
-
-        {/* Date */}
-        <span>{formattedDate}</span>
-
-        {/* Heure */}
-        <span>{formattedTime}</span>
+        <span className="font-mono font-semibold">{formattedTime}</span>
       </div>
     </div>
   );

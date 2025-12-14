@@ -63,12 +63,7 @@ L’objectif est de proposer une **solution accessible et automatisée** pour :
 
 ### Lancer en local
 ```bash
-git clone https://github.com/Rimeldev/Hydronex.git
-cd hydronex-dashboard
-npm install
-npm run dev
 
-```
 
 ---
 
@@ -86,7 +81,7 @@ npm run dev
 
 ## 🌐 Lien de démo en ligne
 
-🔗 [https://hydronex-kappa.vercel.app/]
+
 
 ---
 

@@ -1,17 +1,12 @@
-// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // Enable class-based dark mode
   theme: {
-    extend: {
-      colors: {
-        primary: "#4CAF50",   // Vert
-        accent: "#FFD700",    // Jaune
-        light: "#F3F4F6",     // Gris clair
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }

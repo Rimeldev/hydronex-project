@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react"; // 👈 importer les icônes
-import { loginUser } from "../services/authService";
+import { loginUser } from "../services/api";
 import { toast } from "react-toastify";
 
 export default function PasswordPromptModal({ onClose, onSuccess }) {

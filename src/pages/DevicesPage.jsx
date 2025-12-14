@@ -1,15 +1,14 @@
-// DevicesPage.jsx
 import { useEffect, useState } from "react";
-import { Eye, Plus, RotateCcw, SatelliteDish, Pencil } from "lucide-react";
+import { Eye, Plus, RotateCcw, Pencil } from "lucide-react";
 import { toast } from "react-toastify";
 
 import DeviceDetailsModal from "../components/DeviceDetailsModal";
 import DeviceFormModal from "../components/DeviceFormModal";
 import PasswordPromptModal from "../components/PasswordPromptModal";
 import LoadingMessage from "../components/Spinner";
-import LocationDisplay from "../components/LocationDisplay"; // Nouveau composant
+import LocationDisplay from "../components/LocationDisplay";
 
-import { fetchDevices, addDevice, updateDevice } from "../services/deviceService";
+import { fetchDevices, addDevice, updateDevice } from "../services/api";
 
 export default function DevicesPage() {
   const [devices, setDevices] = useState([]);
@@ -17,9 +16,9 @@ export default function DevicesPage() {
   const [error, setError] = useState(null);
 
   const [selectedDevice, setSelectedDevice] = useState(null);
-  const [showModal, setShowModal] = useState(false); // Voir
-  const [showAddModal, setShowAddModal] = useState(false); // Formulaire ajout/modif
-  const [showPasswordModal, setShowPasswordModal] = useState(false); // Mot de passe
+  const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -33,9 +32,9 @@ export default function DevicesPage() {
     try {
       const data = await fetchDevices();
       setDevices(data);
-      if (data.length === 0) toast.info("Aucun dispositif trouvé.");
+      if (data.length === 0) toast.info("No devices found.");
     } catch (err) {
-      console.error("Erreur lors du chargement :", err);
+      console.error("Error loading devices:", err);
       setError(err);
     } finally {
       setLoading(false);
@@ -44,7 +43,7 @@ export default function DevicesPage() {
 
   useEffect(() => {
     if (error && !loading) {
-      toast.error("Erreur : impossible de charger les dispositifs !");
+      toast.error("Error: Unable to load devices!");
     }
   }, [error, loading]);
 
@@ -84,10 +83,10 @@ export default function DevicesPage() {
       await addDevice(newDevice);
       await loadDevices();
       setShowAddModal(false);
-      toast.success("Dispositif ajouté avec succès !");
+      toast.success("Device added successfully!");
     } catch (err) {
-      console.error("Erreur lors de l'ajout :", err);
-      toast.error(err.response?.data?.message || "Erreur lors de l'ajout.");
+      console.error("Error adding device:", err);
+      toast.error(err.response?.data?.message || "Error adding device.");
     }
   };
 
@@ -102,114 +101,126 @@ export default function DevicesPage() {
       setShowAddModal(false);
       setIsEditMode(false);
       setSelectedDevice(null);
-      toast.success("Dispositif mis à jour avec succès !");
+      toast.success("Device updated successfully!");
     } catch (err) {
-      console.error("Erreur lors de la mise à jour :", err.response?.data || err);
-      toast.error(err.response?.data?.message || "Erreur lors de la mise à jour.");
+      console.error("Error updating device:", err.response?.data || err);
+      toast.error(err.response?.data?.message || "Error updating device.");
     }
   };
 
-  return (
-    <div className="flex">
-      <div className="flex-1 p-8 bg-gray-50 min-h-screen">
-        {/* En-tête */}
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-            <SatelliteDish className="w-10 h-10 text-blue-600" />
-            Liste de Dispositifs
-          </h3>
+  const activeDevices = devices.filter(d => d.statut === "actif").length;
 
-          <div className="flex gap-2">
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900">Devices</h1>
+            <p className="text-sm text-gray-500 mt-1">
+              {devices.length} total · {activeDevices} active
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
             <button
               onClick={loadDevices}
               disabled={loading}
-              className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
             >
-              <RotateCcw className="w-4 h-4" />
-              Rafraîchir
+              <RotateCcw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
             </button>
+            
             <button
               onClick={handleClickAddDispositif}
               disabled={loading}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md transition ${
-                loading
-                  ? "bg-blue-300 text-white cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700 text-white"
-              }`}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
             >
               <Plus className="w-4 h-4" />
-              Ajouter un dispositif
+              Add Device
             </button>
           </div>
         </div>
 
-        {/* Tableau */}
-        <div className="bg-white shadow-md rounded-lg border border-gray-200 overflow-hidden">
+        {/* Table */}
+        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           {loading ? (
-            <LoadingMessage />
+            <div className="p-12">
+              <LoadingMessage />
+            </div>
           ) : devices.length === 0 ? (
-            <p className="p-4 text-gray-600">Aucun dispositif trouvé.</p>
+            <div className="p-12 text-center">
+              <p className="text-gray-500">No devices found</p>
+              <p className="text-sm text-gray-400 mt-1">Add your first device to get started</p>
+            </div>
           ) : (
-            <table className="min-w-full table-auto text-sm">
-              <thead className="bg-blue-50">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
                 <tr>
-                  <th className="text-left px-6 py-3 font-semibold text-gray-600">Nom</th>
-                  <th className="text-left px-6 py-3 font-semibold text-gray-600">Localisation</th>
-                  <th className="text-left px-6 py-3 font-semibold text-gray-600">Statut</th>
-                  <th className="text-right px-6 py-3 font-semibold text-gray-600">Action</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Location
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="bg-white divide-y divide-gray-200">
                 {devices.map((device) => (
-                  <tr key={device.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4">{device.nom}</td>
+                  <tr key={device.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-2 h-2 rounded-full ${
+                          device.statut === "actif" ? "bg-green-500" : "bg-gray-300"
+                        }`} />
+                        <span className="text-sm font-medium text-gray-900">
+                          {device.nom}
+                        </span>
+                      </div>
+                    </td>
                     <td className="px-6 py-4">
-                      {/* Remplacé {device.localisation} par le composant LocationDisplay */}
                       <LocationDisplay 
                         coordinates={device.localisation} 
                         maxLength={45}
                       />
                     </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          device.statut === "actif"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
-                      >
-                        <span
-                          className={`h-2 w-2 rounded-full mr-2 ${
-                            device.statut === "actif"
-                              ? "bg-green-500"
-                              : "bg-red-500"
-                          }`}
-                        />
-                        {device.statut === "actif" ? "Actif" : "Inactif"}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        device.statut === "actif"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-gray-100 text-gray-800"
+                      }`}>
+                        {device.statut === "actif" ? "Active" : "Inactive"}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex justify-end gap-4">
-                        {!isAuthenticated && (
-                          <button
-                            className="inline-flex items-center text-blue-600 hover:underline"
-                            onClick={() => handleViewClick(device)}
-                          >
-                            <Eye className="w-4 h-4 mr-1" />
-                            Voir
-                          </button>
-                        )}
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                      {!isAuthenticated && (
+                        <button
+                          onClick={() => handleViewClick(device)}
+                          className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                        >
+                          <Eye className="w-4 h-4" />
+                          View
+                        </button>
+                      )}
 
-                        {isAuthenticated && (
-                          <button
-                            className="inline-flex items-center text-yellow-600 hover:underline"
-                            onClick={() => handleClickEditDevice(device)}
-                          >
-                            <Pencil className="w-4 h-4 mr-1" />
-                            Modifier
-                          </button>
-                        )}
-                      </div>
+                      {isAuthenticated && (
+                        <button
+                          onClick={() => handleClickEditDevice(device)}
+                          className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                        >
+                          <Pencil className="w-4 h-4" />
+                          Edit
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -218,7 +229,7 @@ export default function DevicesPage() {
           )}
         </div>
 
-        {/* Modales */}
+        {/* Modals */}
         {showModal && selectedDevice && (
           <DeviceDetailsModal
             device={selectedDevice}

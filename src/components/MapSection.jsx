@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { fetchDevices } from '../services/deviceService'; // Import de votre service
+import { fetchDevices } from '../services/api'; // Import de votre service
 
 // Pour corriger l'icône des marqueurs par défaut
 delete L.Icon.Default.prototype._getIconUrl;
@@ -209,23 +209,23 @@ export default function MapSection({ selectedDeviceId = null }) {
     <div className="bg-white p-4 rounded-xl shadow-md w-full h-[320px]">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-lg font-semibold text-gray-800">
-          Carte des dispositifs
-          <span className="text-sm text-gray-500 ml-2">({markers.length} dispositif{markers.length > 1 ? 's' : ''})</span>
+          Device map
+          <span className="text-sm text-gray-500 ml-2">({markers.length} device{markers.length > 1 ? 's' : ''})</span>
         </h3>
         
         {/* Légende */}
         <div className="flex items-center gap-4 text-xs">
           <div className="flex items-center gap-1">
             <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span className="text-gray-600">Actif</span>
+            <span className="text-gray-600">Active</span>
           </div>
           <div className="flex items-center gap-1">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <span className="text-gray-600">Inactif</span>
+            <span className="text-gray-600">Inactive</span>
           </div>
           <div className="flex items-center gap-1">
             <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            <span className="text-gray-600">Sélectionné</span>
+            <span className="text-gray-600">Selected</span>
           </div>
         </div>
       </div>
@@ -240,7 +240,7 @@ export default function MapSection({ selectedDeviceId = null }) {
                 onClick={loadDevices}
                 className="text-xs bg-red-100 hover:bg-red-200 px-3 py-1 rounded transition-colors"
               >
-                Réessayer
+                Retry
               </button>
             </div>
           </div>
